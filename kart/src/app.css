@@ -1,0 +1,17 @@
+.contenedorusuario{
+    display: flex;
+    
+    align-items: center;
+    background-color: darkgray;
+    
+
+}
+
+.componenteusuario{
+    
+    flex: 1; /* Hace que las columnas ocupen igualmente el espacio disponible */
+    display: flex; /* Cambia la dirección del flujo del contenido a columna */
+    flex-direction: column; /* Establece la dirección del flujo del contenido en columnas */
+    justify-content: center;
+    align-items: center;
+}
