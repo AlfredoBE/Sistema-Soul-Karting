@@ -17,7 +17,7 @@ export default function Casual() {
 
             <div
             className="tarjeta"
-            style={{ background:parseInt(localStorage.getItem(`contador_${item.id}`)) === 0 ? "red" : "A1DD84"}}
+            style={{ background:parseInt(localStorage.getItem(`contador_${item.id}`)) === 0 ? "#b24343" : "A1DD84"}}
           >
             <div className="t_superior">
               <div className="nombre_plan">

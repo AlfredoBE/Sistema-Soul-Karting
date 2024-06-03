@@ -1,6 +1,6 @@
 .box{
+
     display: flex;
-    
     margin: 5px;
     
     
@@ -15,6 +15,7 @@
     padding: 2%;
     font-family: "Poppins", sans-serif;
     border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     
 }
 
@@ -112,5 +113,6 @@ button{
     color: #ffffff;
     
     font-family: "Poppins", sans-serif;
+    margin-top: 75px;
 }
 

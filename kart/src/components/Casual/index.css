@@ -5,6 +5,7 @@
     margin: 5px;
     
     
+    
 }
 
 .tarjeta{
@@ -16,13 +17,14 @@
     padding: 2%;
     font-family: "Poppins", sans-serif;
     border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
     
 }
 
 .t_superior{
     display: flex;
     justify-content: space-around;
-    
     color: #ffff;
 }
 .nombre_plan{

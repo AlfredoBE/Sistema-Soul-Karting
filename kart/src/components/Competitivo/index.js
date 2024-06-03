@@ -12,7 +12,7 @@ export default function Competitivo() {
             <div>
               <div
             className="tarjeta"
-            style={{ background: item.Vueltas === 0 ? "red" : "A1DD84" }}
+            style={{ background: item.Vueltas === 0 ? "#b24343" : "A1DD84" }}
           >
             <div className="t_superior">
               <div className="nombre_plan">

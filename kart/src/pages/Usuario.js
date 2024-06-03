@@ -1,5 +1,6 @@
 import Casual from "../components/Casual";
 import Competitivo from "../components/Competitivo";
+import Nav from "../components/Nav";
 
 
 
@@ -8,17 +9,17 @@ export function Usuario(){
 
     return<>
 
-    <h1>Soy admin cabros</h1>
-    
+    <Nav/>
     <div className="contenedorusuario">
-      <div className="componenteusuario" >
-        <Casual/>
-      </div>
-      <div className="componenteusuario">
-        <Competitivo/>        
-      </div>
-
+        <div className="componenteusuario" >
+          <Casual/>
+        </div>
+        <div className="componenteusuario">
+          <Competitivo/>        
+        </div>
     </div>
+    
+
     
     </>
 }
