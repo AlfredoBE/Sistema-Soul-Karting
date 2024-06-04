@@ -30,10 +30,10 @@ class clienteCompetitivo(models.Model):
 class clienteCasual(models.Model):
     id_casual=models.AutoField(primary_key=True)
     nombre_casual=models.CharField(max_length=30, default='John')   
-    apellidoCasual=models.CharField(max_length=30,default='Doe')   
+    apellido_casual=models.CharField(max_length=30,default='Doe')   
     rut_casual=models.IntegerField()
     plan_casual=models.CharField(max_length=20)
-    tiempo_disponible=models.TimeField()
+    tiempo_disponible=models.IntegerField()
     fechaRegistro_casual=models.DateField()
     estado_casual=models.CharField(max_length=30)
     id_usuario=models.ForeignKey(usuario, on_delete=models.PROTECT)
@@ -59,8 +59,7 @@ class tablaClasificacion(models.Model):
         super().save(*args, **kwargs)
 
     def generate_random_time(self):
-        random_seconds = random.randint(0, 400)  # Numero de segundos
-        random_time = time(random_seconds // 3600, (random_seconds % 3600) // 60, random_seconds % 60)
+        random_time = time(0, random.randint(1,3), random.randint(0,59))
         return random_time
 
     def __str__(self):

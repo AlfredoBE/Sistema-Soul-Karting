@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sskapp',
-    'rest_framework'
+    'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -49,7 +50,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 ROOT_URLCONF = 'ssk.urls'
 
@@ -77,12 +83,23 @@ WSGI_APPLICATION = 'ssk.wsgi.application'
 import pymysql
 pymysql.install_as_MySQLdb()
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Usar el backend de MySQL
-        'NAME': 'sskdb',  # Nombre de tu base de datos
-        'USER': 'root',                 # Tu usuario de la base de datos
-        'PASSWORD': 'usuarioroot',          # Tu contraseña de la base de datos
-        'HOST': '127.0.0.1',                   # Por lo general es 'localhost' o '127.0.0.1'
+#MySQL Alfredo
+  #'default': {
+  #    'ENGINE': 'django.db.backends.mysql',
+  #    'NAME': 'sskdb',
+  #    'USER': 'root',
+  #    'PASSWORD': 'usuarioroot',
+  #    'HOST': '127.0.0.1',
+  #    'PORT': '3306',
+  #},
+
+#MySQL Cristobal
+    'default':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sskdb',
+        'USER': 'root',
+        'PASSWORD': 'Akiyama2012',
+        'HOST': '127.0.0.1',                   
         'PORT': '3306',
     }
 }
