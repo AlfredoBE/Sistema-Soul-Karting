@@ -5,6 +5,8 @@ import './index.css'
 
 export default function ListadoKarts(){
 
+    
+
     return<>
         <h1>Estado de Karts</h1>
 

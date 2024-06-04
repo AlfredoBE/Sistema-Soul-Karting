@@ -1,4 +1,4 @@
-
+import React from 'react';
 import './index.css'
 
 export default function Nav(){
@@ -10,10 +10,10 @@ export default function Nav(){
         <a href="/">SoulsKarting</a>
       </div>
       <ul className="navbar-links">
-        <li><a href="/">Ingresar Clientes</a></li>
-        <li><a href="/about">Listado de Karts</a></li>
+        <li><a href="/ingreso">Ingresar Clientes</a></li>
+        <li><a href="/karts">Listado de Karts</a></li>
         <li><a href="/services">Seccion de Informes</a></li>
-        <li><a href="/contact">Contacto</a></li>
+        <li><a href="/contacto">Contacto</a></li>
       </ul>
     </nav>
     

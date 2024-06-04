@@ -1,0 +1,6 @@
+¡Se requiere instalar node primero!
+
+npx create-react-app frontend
+npm install axios
+npm i prop-types
+npm i -D react-router-dom
