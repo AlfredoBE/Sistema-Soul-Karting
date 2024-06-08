@@ -1,15 +1,3 @@
-/*
-    id_casual=models.AutoField(primary_key=True)
-    nombre_casual=models.CharField(max_length=30, default='John')   
-    apellido_casual=models.CharField(max_length=30,default='Doe')   
-    rut_casual=models.IntegerField()
-    plan_casual=models.CharField(max_length=20)
-    tiempo_disponible=models.IntegerField()
-    fechaRegistro_casual=models.DateField()
-    estado_casual=models.CharField(max_length=30)
-    id_usuario=models.ForeignKey(usuario, on_delete=models.PROTECT)
-    id_kart=models.ForeignKey(kart, on_delete=models.PROTECT)
-*/
 import './index.css' 
 import React, { useState, handleSubmit, useEffect } from 'react';
 import axios from 'axios';
@@ -54,7 +42,7 @@ export default function Formulario(){
             } else if (selectedPlan === 'Plan 2') {
             setTiempoDisponible('2000');
             } else if (selectedPlan === 'Plan 0') {
-                setTiempoDisponible('30');
+                setTiempoDisponible('10');
             }
           }
           if (tipoCliente === 'Competitivo') {
@@ -103,6 +91,7 @@ export default function Formulario(){
             axios.post('http://127.0.0.1:8000/api/v1/clientesComp/', formDataCompe)
             .then(response => {
             console.log('Formulario enviado:', response.data);
+            alert('Se Ingreso el CLiente!');
             
         })
         .catch(error => {
@@ -113,6 +102,7 @@ export default function Formulario(){
             axios.post('http://127.0.0.1:8000/api/v1/clientesCas/', formDataCasual)
             .then(response => {
             console.log('Formulario enviado:', response.data);
+            alert('Se Ingreso el cliente!');
             
         })
         .catch(error => {

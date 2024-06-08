@@ -7,7 +7,7 @@ export default function Nav(){
     
     <nav className="navbar">
       <div className="navbar-logo">
-        <a href="/">SoulsKarting</a>
+        <a href="/">SoulKarting</a>
       </div>
       <ul className="navbar-links">
         <li><a href="/ingreso">Ingresar Clientes</a></li>
