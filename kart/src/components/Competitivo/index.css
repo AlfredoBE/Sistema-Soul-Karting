@@ -116,3 +116,19 @@ button{
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+
+.botonRestar{
+    
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    margin-left: 30px;
+    padding: 10px;
+    margin-top: 47px;
+}
+
+.vueltasRestantes{
+    display: flex;
+    margin: 0px;
+
+}

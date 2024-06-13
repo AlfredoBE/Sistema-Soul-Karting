@@ -38,7 +38,7 @@ export default function Cronometro({ seconds, id}) {
   useEffect(() => {
     if (contador <= 0) {
       clearInterval(timerId.current);
-      alert('Fin');
+      alert('Fin de tiempo');
       setCorriendo(false);
       localStorage.removeItem(`corriendo_${id}`);
       window.location.reload()
