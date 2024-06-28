@@ -1,6 +1,8 @@
-¡Se requiere instalar node primero!
 
-npx create-react-app frontend
+Instalar nodejs desde internet https://nodejs.org/en
+npx create-react-app nombreDeLaCarpeta <- Si tomas la carpeta del git no deberia ser necesario
+npm install json
+npm install json-server
 npm install axios
 npm i prop-types
 npm i -D react-router-dom

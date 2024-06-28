@@ -3,7 +3,7 @@ import React, { useState, handleSubmit, useEffect } from 'react';
 import axios from 'axios';
 
 export default function Formulario(){
-    const [idUsuario, setidUsuario] = useState(21876234);
+    const idUsuario = localStorage.getItem("id_usuario");
     const [tipoCliente, setTipoCliente] = useState('');
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');

@@ -1,5 +1,12 @@
-django
+python.exe -m pip install --upgrade pip
+asgiref
+cffi
+Django
 djangorestframework
 pymysql
 cryptography
 django-cors-headers
+pycparser
+setuptools
+sqlparse
+tzdata
