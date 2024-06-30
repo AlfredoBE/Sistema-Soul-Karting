@@ -32,7 +32,7 @@ class tablaClasificacionSerializer(serializers.ModelSerializer):
         model = tablaClasificacion
         fields = ['id_tablaClasificacion', 'nombre_clienteCompetitivo', 'apellido_clienteCompetitivo', 'tiempoVueltaMasRapida', 'id_competitivo']
         read_only_fields = ['id_tablaClasificacion', 'nombre_clienteCompetitivo', 'apellido_clienteCompetitivo', 'tiempoVueltaMasRapida']
-
+        
 class loginSerializer(serializers.Serializer):
     nombre_usuario = serializers.CharField(max_length=30)
     password_usuario = serializers.CharField(max_length=20)

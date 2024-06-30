@@ -5,6 +5,7 @@ import Competitivo from "../components/Competitivo";
 import ListadoKarts from "../components/ListadoKarts";
 import Formulario from "../components/Formulario";
 import Nav_admin from '../components/Nav_Admin';
+import Clasificacion from '../components/TablaClasificacion';
 
 
 export default function Admin() {  
@@ -18,6 +19,9 @@ export default function Admin() {
             <div className="componenteusuario">
               <Competitivo />
             </div>
+            <div>
+              <Clasificacion />
+            </div>
           </div>
-        </>  
+        </>
   )};

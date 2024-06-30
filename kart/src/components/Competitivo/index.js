@@ -19,6 +19,34 @@ export default function Competitivo() {
       });
   }, []);
 
+  async function actualizarEstadoCompetitivo(id_competitivo, nuevoEstado) {
+    try {
+      if(window.confirm("Seguro?")== true){
+      const response = await axios.patch(
+        `http://127.0.0.1:8000/api/v1/clientesComp/${id_competitivo}/`, // Ajusta la URL
+        { estado_competitivo: nuevoEstado }
+      );
+
+      if (response.status === 200) {
+        // Actualiza el estado local del cliente en React
+        setClientesCompe((prevClientes) =>
+          prevClientes.map((cliente) =>
+            cliente.id_competitivo === id_competitivo
+              ? { ...cliente, estado_competitivo: nuevoEstado }
+              : cliente
+          )
+        );
+      } else {
+        console.error("Error al actualizar el estado:", response.status);
+      }
+    }else{
+      alert("Ta bien");
+    }
+    } catch (error) {
+      console.error("Hubo un error al actualizar el estado:", error);
+    }
+  }
+
   return (
     <>
       <h3 className="titulo">Competitivo</h3>
@@ -72,7 +100,13 @@ export default function Competitivo() {
                 <a href="a">
                   <img src="editar.png" alt="a" width={25}></img>
                 </a>
-                <button>Retirar</button>
+                <button
+                  onClick={() =>
+                    actualizarEstadoCompetitivo(item.id_competitivo, "Inactivo")
+                  }
+                >
+                  Retirar
+                </button>
               </div>
             </div>
           )}

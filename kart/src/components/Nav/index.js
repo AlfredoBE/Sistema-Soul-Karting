@@ -3,7 +3,6 @@ import './index.css'
 import Cierre_Sesion from "../Cierre_Sesion";
 export default function Nav(){
   const handleCierreDeSesion = Cierre_Sesion();
-//documento caso 14, documento word, excel de resumen, foto del diagrama y bpmn
     return<>
     
     <nav className="navbar">

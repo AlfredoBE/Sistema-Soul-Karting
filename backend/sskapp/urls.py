@@ -12,4 +12,11 @@ router.register(r'clasificacion', views.tablaClasificacionViewSet)
 
 urlpatterns=[
     path('', include(router.urls)),
+    path('api/v1/clasificacion/reporte/', views.ReporteClasificacion.as_view(), name='reporte_clasificacion')
+
 ]
+
+'''  urlpatterns=[
+    path('', include(router.urls)),
+    path('api/v1/clasificacion/reporte/', views.ReporteClasificacion.as_view(), name='reporte_clasificacion'),
+]   '''

@@ -1,9 +1,22 @@
 import React, {useEffect, useState } from 'react';
+import axios from 'axios'; 
+
 
 export default function RestarVueltas({vueltasdisponibles, id}){
     const [vueltas, setVueltas] = useState(
         ()=> parseInt(localStorage.getItem(`vueltas_${id}`) || vueltasdisponibles)
     );
+
+    async function crearRegistroTablaClasificacion(id) {
+      try {
+          const response = await axios.post(
+              'http://127.0.0.1:8000/api/v1/clasificacion/',
+              { id_competitivo: id }
+          );
+      } catch (error) {
+          console.error('Hubo un error al crear el registro:', error);
+      }
+    }
 
     useEffect(()=>{
         localStorage.setItem(`vueltas_${id}`, vueltas); 
@@ -21,7 +34,8 @@ export default function RestarVueltas({vueltasdisponibles, id}){
         if(vueltas <= 0){
           alert('Fin de vueltas');
           localStorage.removeItem(vueltas);
-          window.location.reload()
+          window.location.reload();
+          crearRegistroTablaClasificacion(id);
         }
       }, [vueltas, id])
       return (

@@ -18,6 +18,34 @@ export default function Casual() {
       });
   }, []);
 
+  async function actualizarEstadoCasual(id_casual, nuevoEstado) {
+    try {
+      if (window.confirm("Seguro?") == true) {
+      const response = await axios.patch(
+        `http://127.0.0.1:8000/api/v1/clientesCas/${id_casual}/`, // Ajusta la URL
+        { estado_casual: nuevoEstado }
+      );
+
+      if (response.status === 200) {
+        // Actualiza el estado local del cliente en React
+        setClientesCas((prevClientes) =>
+          prevClientes.map((cliente) =>
+            cliente.id_casual === id_casual
+              ? { ...cliente, estado_casual: nuevoEstado }
+              : cliente
+          )
+        );
+      } else {
+        console.error("Error al actualizar el estado:", response.status);
+      }
+    } else {
+      alert("Ta bien");
+    }
+    } catch (error) {
+      console.error("Hubo un error al actualizar el estado:", error);
+    }
+  }
+
   return (
     <>
       <h3 className="titulo">Casuales</h3>
@@ -73,7 +101,13 @@ export default function Casual() {
                 <a href="a">
                   <img src="editar.png" alt="a" width={25}></img>
                 </a>
-                <button>Retirar</button>
+                <button
+                  onClick={() =>
+                    actualizarEstadoCasual(item.id_casual, "Inactivo")
+                  }
+                >
+                  Retirar
+                </button>
               </div>
             </div>
           )}
