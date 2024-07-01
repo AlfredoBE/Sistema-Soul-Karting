@@ -85,16 +85,28 @@ export default function Formulario() {
 
   const handleLimpiarClasificacion = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/v1/clasificacion/");
-      const ids = response.data.map(item => item.id_tablaClasificacion);
-  
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/v1/clasificacion/"
+      );
+      const ids = response.data.map((item) => item.id_tablaClasificacion);
+
       for (const id of ids) {
         await axios.delete(`http://127.0.0.1:8000/api/v1/clasificacion/${id}/`);
       }
-  
+
       console.log("Registros de clasificación eliminados con éxito");
     } catch (error) {
       console.error("Hubo un error al eliminar los registros:", error);
+    }
+  };
+
+  const actualizarKart = async (id_kart) => {
+    try {
+      axios.patch(`http://127.0.0.1:8000/api/v1/karts/${id_kart}/`, {
+        estado_kart: "Ocupado",
+      });
+    } catch (error) {
+      console.log("Ocurrio un error");
     }
   };
 
@@ -127,23 +139,29 @@ export default function Formulario() {
     console.log("Datos del formulario Compe:", formDataCompe);
     console.log("Datos del formularioCasual:", formDataCasual);
     if (tipoCliente === "Competitivo") {
+      const num_kart = formDataCompe.id_kart;
       axios
         .post("http://127.0.0.1:8000/api/v1/clientesComp/", formDataCompe)
         .then((response) => {
           console.log("Formulario enviado:", response.data);
+          actualizarKart(num_kart);
           alert("Se Ingreso el cliente!");
           handleLimpiarClasificacion();
+          window.location.reload();
         })
         .catch((error) => {
           console.error("Hubo un error al enviar el formulario!", error);
         });
     }
     if (tipoCliente === "Casual") {
+      const num_kart = formDataCasual.id_kart;
       axios
         .post("http://127.0.0.1:8000/api/v1/clientesCas/", formDataCasual)
         .then((response) => {
           console.log("Formulario enviado:", response.data);
+          actualizarKart(num_kart);
           alert("Se Ingreso el cliente!");
+          window.location.reload();
         })
         .catch((error) => {
           console.error("Hubo un error al enviar el formulario!", error);
@@ -151,6 +169,24 @@ export default function Formulario() {
     }
   };
   
+  const validarEntradaTexto = (texto) => {
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/;
+    return regex.test(texto);
+  };
+
+  const handleNombreChange = (e) => {
+    const valor = e.target.value;
+    if (validarEntradaTexto(valor)) {
+      setNombre(valor);
+    }
+  };
+
+  const handleApellidoChange = (e) => {
+    const valor = e.target.value;
+    if (validarEntradaTexto(valor)) {
+      setApellido(valor);
+    }
+  };
   return (
     <>
       <h2>Formulario de Cliente</h2>
@@ -176,7 +212,7 @@ export default function Formulario() {
             id="nombre"
             name="nombre"
             value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
+            onChange={handleNombreChange}
             required
           />
         </div>
@@ -188,7 +224,7 @@ export default function Formulario() {
             id="apellido"
             name="apellido"
             value={apellido}
-            onChange={(e) => setApellido(e.target.value)}
+            onChange={handleApellidoChange}
             required
           />
         </div>

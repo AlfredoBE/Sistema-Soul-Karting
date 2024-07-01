@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework import routers
 from sskapp import views
 from . import views
+from .views import TablaClasificacionPDFView
 
 router= routers.DefaultRouter()
 router.register(r'clientesComp',views.clienteCompetitivoViewSet)
@@ -12,7 +13,7 @@ router.register(r'clasificacion', views.tablaClasificacionViewSet)
 
 urlpatterns=[
     path('', include(router.urls)),
-    path('api/v1/clasificacion/reporte/', views.ReporteClasificacion.as_view(), name='reporte_clasificacion')
+    path('tabla-clasificacion-pdf/', TablaClasificacionPDFView.as_view(), name='tabla-clasificacion-pdf'),
 
 ]
 

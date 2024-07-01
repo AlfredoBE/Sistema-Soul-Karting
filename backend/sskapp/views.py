@@ -66,60 +66,67 @@ class Login(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #generacion de reporte pdf
-'''    '''
-'''class reporte(APIView):
-    def get(self, request,id_tablaClasificacion):
-        tablaClasificacion_pdf = tablaClasificacion.objects.get(id_tablaClasificacion=id_tablaClasificacion)
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="Tabla de clasificaciones: {tablaClasificacion_pdf.id_tablaClasificacion}.pdf"'
-        pdf = canvas.Canvas(response)
-        pdf.drawString(100, 800, f'Id de la tabla: {tablaClasificacion_pdf.id_tablaClasificacion}')
-        pdf.drawString(100, 780, f'Nombre del cliente competitivo: {tablaClasificacion_pdf.nombre_clienteCompetitivo}')
-        pdf.drawString(100, 760, f'Apellido del cliente competitivo: {tablaClasificacio_pdf.apellido_clienteCompetitivo}')
-        pdf.drawString(100, 740, f'Tiempo de vuelta mas rapida: {tablaClasificacio_pdf.tiempoVueltaMasRapida}')
-        pdf.drawString(100, 740, f'Identificacion del usuario competitivo: {tablaClasificacio_pdf.id_competitivo}')
-        pdf.showPage()
-        pdf.save()
-        return response
-    '''
+#con esto se imprime el pdf http://127.0.0.1:8000/api/v1/tabla-clasificacion-pdf/
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.lib import colors
 
-#esta para sacar todos los reportes y ordenarlosssssss
-class ReporteClasificacion(APIView):
-    def get(self, request, *args, **kwargs):
+
+class TablaClasificacionPDFView(APIView):
+    def get(self, request):
         # Obtener todos los registros de la tabla, ordenados por el tiempo de vuelta más rápida
         tablas_clasificacion = tablaClasificacion.objects.all().order_by('tiempoVueltaMasRapida')
-        
-        # Configurar la respuesta HTTP para un archivo PDF
+
+        # Crear el documento PDF
         response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="Tabla_de_clasificaciones.pdf"'
-        
-        # Crear un objeto PDF
-        pdf = canvas.Canvas(response)
-        
-        # Variables para controlar la posición en el PDF
-        y_position = 800  # Posición Y inicial
-        x_position = 100  # Posición X fija
-        
-        # Iterar sobre todos los registros y agregarlos al PDF
+        response['Content-Disposition'] = 'attachment; filename="tabla_clasificacion.pdf"'
+
+        doc = SimpleDocTemplate(response, pagesize=letter)
+        elements = []
+
+        # Título del documento
+        titulo = Paragraph('Tabla de Clasificación', ParagraphStyle(name='TitleStyle', fontSize=18))
+
+        # Agregar título al documento
+        elements.append(titulo)
+        elements.append(Paragraph('<br/><br/>', ParagraphStyle(name='TitleStyle', fontSize=12)))
+
+        # Crear lista para datos de la tabla
+        table_data = [
+            ['Id Tabla', 'Nombre Cliente', 'Apellido Cliente', 'Tiempo de Vuelta Más Rápida']
+        ]
+
+        # Agregar datos de la tabla
         for tabla in tablas_clasificacion:
-            pdf.drawString(x_position, y_position, f'Id de la tabla: {tabla.id}')
-            y_position -= 20
-            pdf.drawString(x_position, y_position, f'Nombre del cliente competitivo: {tabla.nombre_clienteCompetitivo}')
-            y_position -= 20
-            pdf.drawString(x_position, y_position, f'Apellido del cliente competitivo: {tabla.apellido_clienteCompetitivo}')
-            y_position -= 20
-            pdf.drawString(x_position, y_position, f'Tiempo de vuelta más rápida: {tabla.tiempoVueltaMasRapida}')
-            y_position -= 20
-            pdf.drawString(x_position, y_position, f'Identificación del usuario competitivo: {tabla.id_competitivo}')
-            y_position -= 40  # Espacio adicional entre registros
-            
-            # Si la posición Y está demasiado baja, agregar una nueva página
-            if y_position < 100:
-                pdf.showPage()
-                y_position = 800  # Reiniciar la posición Y
-        
-        # Guardar y cerrar el PDF
-        pdf.showPage()
-        pdf.save()
-        
+            row = [
+                str(tabla.id_tablaClasificacion),
+                tabla.nombre_clienteCompetitivo,
+                tabla.apellido_clienteCompetitivo,
+                str(tabla.tiempoVueltaMasRapida),
+            ]
+            table_data.append(row)
+
+        # Crear la tabla
+        table = Table(table_data)
+
+        # Estilo de la tabla
+        style = TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), (0.2, 0.4, 0.6)),  # Color de fondo para encabezado
+            ('TEXTCOLOR', (0, 0), (-1, 0), (1, 1, 1)),  # Color de texto para encabezado
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),  # Alinear contenido al centro
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),  # Fuente en negrita para encabezado
+            ('FONTSIZE', (0, 0), (-1, 0), 12),  # Tamaño de fuente para encabezado
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),  # Espacio inferior para encabezado
+            ('BACKGROUND', (0, 1), (-1, -1), (0.9, 0.9, 0.9)),  # Color de fondo para filas alternas
+            ('GRID', (0, 0), (-1, -1), 1, (0, 0, 0)),  # Estilo de la cuadrícula
+        ])
+        table.setStyle(style)
+
+        # Agregar la tabla al documento PDF
+        elements.append(table)
+
+        # Construir el PDF
+        doc.build(elements)
+
         return response

@@ -47,6 +47,17 @@ export default function Competitivo() {
     }
   }
 
+  async function liberarKart(id_kart, nuevoEstado){
+    try{
+      const response = await axios.patch(
+        `http://127.0.0.1:8000/api/v1/karts/${id_kart}/`,
+        { estado_kart: nuevoEstado }
+      )
+    } catch(error){
+      console.error("Hubo un error al actualizar el estado del kart:", error)
+    }
+  }
+
   return (
     <>
       <h3 className="titulo">Competitivo</h3>
@@ -97,13 +108,15 @@ export default function Competitivo() {
               </div>
 
               <div className="botones">
-                <a href="a">
+                <a href="modificar">
                   <img src="editar.png" alt="a" width={25}></img>
                 </a>
                 <button
-                  onClick={() =>
-                    actualizarEstadoCompetitivo(item.id_competitivo, "Inactivo")
+                  onClick={() =>{actualizarEstadoCompetitivo(item.id_competitivo, "Inactivo");
+                    liberarKart(item.id_kart, "Desocupado")
                   }
+                  }
+              
                 >
                   Retirar
                 </button>

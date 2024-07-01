@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cronometro from "../Cronometro";
+import EditarCliente from "../Editar_cliente";
 
 import "./index.css";
 
 export default function Casual() {
   const [clientesCas, setClientesCas] = useState([]);
+  const [clienteActual, setClienteActual] = useState(null);
+  const [mostrarEditar, setMostrarEditar] = useState(false);
   useEffect(() => {
     axios
       .get("http://127.0.0.1:8000/api/v1/clientesCas/")
@@ -36,14 +39,30 @@ export default function Casual() {
           )
         );
       } else {
-        console.error("Error al actualizar el estado:", response.status);
+        console.error("Error al actualizar el estado del cliente casual:", response.status);
       }
     } else {
       alert("Ta bien");
     }
     } catch (error) {
-      console.error("Hubo un error al actualizar el estado:", error);
+      console.error("Hubo un error al actualizar el estado del cliente casual:", error);
     }
+  }
+
+  async function liberarKart(id_kart, nuevoEstado){
+    try{
+      const response = await axios.patch(
+        `http://127.0.0.1:8000/api/v1/karts/${id_kart}/`,
+        { estado_kart: nuevoEstado }
+      )
+    } catch(error){
+      console.error("Hubo un error al actualizar el estado del kart:", error)
+    }
+  }
+
+  const handleEditarClick = (cliente) => {
+    setClienteActual(cliente);
+    setMostrarEditar(true);
   }
 
   return (
@@ -98,12 +117,15 @@ export default function Casual() {
               </div>
 
               <div className="botones">
-                <a href="a">
-                  <img src="editar.png" alt="a" width={25}></img>
-                </a>
+                <a href="/modificar" onClick={() => handleEditarClick(item)}>
+                  <img src="editar.png" alt="editar" width={25}
+                  ></img>
+                  </a>
                 <button
-                  onClick={() =>
-                    actualizarEstadoCasual(item.id_casual, "Inactivo")
+                  onClick={() =>{
+                    actualizarEstadoCasual(item.id_casual, "Inactivo");
+                    liberarKart(item.id_kart, "Desocupado")
+                  }
                   }
                 >
                   Retirar

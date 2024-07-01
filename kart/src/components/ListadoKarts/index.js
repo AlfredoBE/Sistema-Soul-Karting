@@ -17,7 +17,7 @@ export default function ListadoKarts() {
 
     obtenerKarts();
   }, []);
-
+  
   return (
     <>
       <h1>Estado de Karts</h1>

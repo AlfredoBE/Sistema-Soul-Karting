@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "../src/app.css";
 import Admin from "./pages/Admin";
 import Karts from "./pages/Karts";
+import Editar from "./pages/Editar";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/ingreso" element={<IngresoClientes></IngresoClientes>}/>
           <Route path="/karts" element={<Karts></Karts>} />
           <Route path="/ingresar_usuarios" element={<Ingresar_usuarios></Ingresar_usuarios>} />
+          <Route path="/modificar" element={<Editar></Editar>} />
         </Routes>
       </Router>
     </>
