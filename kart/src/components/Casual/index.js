@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cronometro from "../Cronometro";
-import EditarCliente from "../Editar_cliente";
+import EditarClienteCas from "../Editar_cliente";
 
 import "./index.css";
 
 export default function Casual() {
   const [clientesCas, setClientesCas] = useState([]);
-  const [clienteActual, setClienteActual] = useState(null);
-  const [mostrarEditar, setMostrarEditar] = useState(false);
+  const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
   useEffect(() => {
     axios
       .get("http://127.0.0.1:8000/api/v1/clientesCas/")
@@ -23,47 +22,56 @@ export default function Casual() {
 
   async function actualizarEstadoCasual(id_casual, nuevoEstado) {
     try {
-      if (window.confirm("Seguro?") == true) {
-      const response = await axios.patch(
-        `http://127.0.0.1:8000/api/v1/clientesCas/${id_casual}/`, // Ajusta la URL
-        { estado_casual: nuevoEstado }
-      );
-
-      if (response.status === 200) {
-        // Actualiza el estado local del cliente en React
-        setClientesCas((prevClientes) =>
-          prevClientes.map((cliente) =>
-            cliente.id_casual === id_casual
-              ? { ...cliente, estado_casual: nuevoEstado }
-              : cliente
-          )
+      if (window.confirm("¿Desea retirar a este cliente Casual? ") == true) {
+        const response = await axios.patch(
+          `http://127.0.0.1:8000/api/v1/clientesCas/${id_casual}/`, // Ajusta la URL
+          { estado_casual: nuevoEstado }
         );
+
+        if (response.status === 200) {
+          // Actualiza el estado local del cliente en React
+          setClientesCas((prevClientes) =>
+            prevClientes.map((cliente) =>
+              cliente.id_casual === id_casual
+                ? { ...cliente, estado_casual: nuevoEstado }
+                : cliente
+            )
+          );
+        } else {
+          console.error(
+            "Error al actualizar el estado del cliente casual:",
+            response.status
+          );
+        }
       } else {
-        console.error("Error al actualizar el estado del cliente casual:", response.status);
       }
-    } else {
-      alert("Ta bien");
-    }
     } catch (error) {
-      console.error("Hubo un error al actualizar el estado del cliente casual:", error);
+      console.error(
+        "Hubo un error al actualizar el estado del cliente casual:",
+        error
+      );
     }
   }
 
-  async function liberarKart(id_kart, nuevoEstado){
-    try{
+  async function liberarKart(id_kart, nuevoEstado) {
+    try {
       const response = await axios.patch(
         `http://127.0.0.1:8000/api/v1/karts/${id_kart}/`,
         { estado_kart: nuevoEstado }
-      )
-    } catch(error){
-      console.error("Hubo un error al actualizar el estado del kart:", error)
+      );
+    } catch (error) {
+      console.error("Hubo un error al actualizar el estado del kart:", error);
     }
   }
 
-  const handleEditarClick = (cliente) => {
-    setClienteActual(cliente);
-    setMostrarEditar(true);
-  }
+  const [mostrarFormulario, setMostrarFormulario] = useState({});
+
+  const toggleFormulario = (id_casual) => {
+    setMostrarFormulario((prevState) => ({
+      ...prevState,
+      [id_casual]: !prevState[id_casual],
+    }));
+  };
 
   return (
     <>
@@ -117,16 +125,16 @@ export default function Casual() {
               </div>
 
               <div className="botones">
-                <a href="/modificar" onClick={() => handleEditarClick(item)}>
-                  <img src="editar.png" alt="editar" width={25}
-                  ></img>
-                  </a>
+              <button onClick={() => toggleFormulario(item.id_casual)}>
+              Modificar
+            </button>{mostrarFormulario[item.id_casual] && (
+              <EditarClienteCas cliente={item} />
+                )}
                 <button
-                  onClick={() =>{
+                  onClick={() => {
                     actualizarEstadoCasual(item.id_casual, "Inactivo");
-                    liberarKart(item.id_kart, "Desocupado")
-                  }
-                  }
+                    liberarKart(item.id_kart, "Desocupado");
+                  }}
                 >
                   Retirar
                 </button>

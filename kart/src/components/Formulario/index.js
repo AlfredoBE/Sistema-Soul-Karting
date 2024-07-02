@@ -65,9 +65,9 @@ export default function Formulario() {
 
     if (tipoCliente === "Casual") {
       if (selectedPlan === "Plan 1") {
-        setTiempoDisponible("1000");
+        setTiempoDisponible("900");
       } else if (selectedPlan === "Plan 2") {
-        setTiempoDisponible("2000");
+        setTiempoDisponible("1500");
       } else if (selectedPlan === "Plan 0") {
         setTiempoDisponible("10");
       }

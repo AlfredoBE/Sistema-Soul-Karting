@@ -10,6 +10,7 @@ import "../src/app.css";
 import Admin from "./pages/Admin";
 import Karts from "./pages/Karts";
 import Editar from "./pages/Editar";
+import SeccionInforme from "./pages/SeccionInforme";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/karts" element={<Karts></Karts>} />
           <Route path="/ingresar_usuarios" element={<Ingresar_usuarios></Ingresar_usuarios>} />
           <Route path="/modificar" element={<Editar></Editar>} />
+          <Route path="/informes" element={<SeccionInforme></SeccionInforme>} />
         </Routes>
       </Router>
     </>

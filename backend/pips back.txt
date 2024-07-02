@@ -11,3 +11,7 @@ reportlab
 setuptools
 sqlparse
 tzdata
+reportlab
+matplotlib
+pillow
+pandas

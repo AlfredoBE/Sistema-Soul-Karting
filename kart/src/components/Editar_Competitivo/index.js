@@ -2,7 +2,7 @@ import "./index.css";
 import React, { useState,handleSubmit, useEffect } from "react";
 import axios from "axios";
 
-export default function EditarClienteCas({ cliente }) {
+export default function EditarClienteCompe({ cliente }) {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [rut, setRut] = useState("");
@@ -11,19 +11,18 @@ export default function EditarClienteCas({ cliente }) {
   const [estado, setEstado] = useState("");
   const [kart, setKart] = useState("");
   const [karts, setKarts] = useState([]);
-  const [tiempoDisponible, setTiempoDisponible] = useState("");
+  const [vueltasDisponibles, setVueltasDisponibles] = useState("");
   
   useEffect(() => {
-    console.log("A punto de modificarlo: "+cliente);
     if (cliente) {
-      setNombre(cliente.nombre_casual);
-      setApellido(cliente.apellido_casual);
-      setRut(cliente.rut_casual);
-      setPlan(cliente.plan_casual);
-      setFecha(cliente.fechaRegistro_casual);
-      setEstado(cliente.estado_casual);
+      setNombre(cliente.nombre_competitivo);
+      setApellido(cliente.apellido_competitivo);
+      setRut(cliente.rut_competitivo);
+      setPlan(cliente.plan_competitivo);
+      setFecha(cliente.fechaRegistro_competitivo);
+      setEstado(cliente.estado_competitivo);
       setKart(cliente.id_kart);
-      setTiempoDisponible(cliente.tiempo_disponible);
+      setVueltasDisponibles(cliente.vueltas_disponibles);
     }
   }, [cliente]);
   useEffect(() => {
@@ -44,11 +43,11 @@ export default function EditarClienteCas({ cliente }) {
     setPlan(selectedPlan);
 
     if (selectedPlan === "Plan 1") {
-      setTiempoDisponible("1000");
+      setVueltasDisponibles("10");
     } else if (selectedPlan === "Plan 2") {
-      setTiempoDisponible("2000");
+      setVueltasDisponibles("15");
     } else if (selectedPlan === "Plan 0") {
-      setTiempoDisponible("10");
+      setVueltasDisponibles("5");
     }
   };
 
@@ -60,7 +59,7 @@ export default function EditarClienteCas({ cliente }) {
       apellido_casual: apellido,
       rut_casual: parseInt(rut, 10),
       plan_casual: plan,
-      tiempo_disponible: parseInt(tiempoDisponible, 10),
+      vueltasDisponibles: parseInt(vueltasDisponibles, 10),
       fechaRegistro_casual: fecha,
       estado_casual: estado,
       id_kart: parseInt(kart, 10),
@@ -68,7 +67,7 @@ export default function EditarClienteCas({ cliente }) {
 
     try {
       const response = await axios.patch(
-        `http://127.0.0.1:8000/api/v1/clientesCas/${cliente.id_casual}/`,
+        `http://127.0.0.1:8000/api/v1/clientesComp/${cliente.id_competitivo}/`,
         formData
       );
       if (response.status === 200) {

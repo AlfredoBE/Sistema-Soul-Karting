@@ -3,6 +3,7 @@ import axios from "axios";
 
 import "./index.css";
 import RestarVueltas from "../Vueltas";
+import EditarClienteCompe from "../Editar_Competitivo";
 
 export default function Competitivo() {
   const [clientesCompe, setClientesCompe] = useState([]);
@@ -21,7 +22,7 @@ export default function Competitivo() {
 
   async function actualizarEstadoCompetitivo(id_competitivo, nuevoEstado) {
     try {
-      if(window.confirm("Seguro?")== true){
+      if(window.confirm("¿Desea retirar a este cliente Competitivo?")== true){
       const response = await axios.patch(
         `http://127.0.0.1:8000/api/v1/clientesComp/${id_competitivo}/`, // Ajusta la URL
         { estado_competitivo: nuevoEstado }
@@ -40,7 +41,7 @@ export default function Competitivo() {
         console.error("Error al actualizar el estado:", response.status);
       }
     }else{
-      alert("Ta bien");
+      
     }
     } catch (error) {
       console.error("Hubo un error al actualizar el estado:", error);
@@ -57,6 +58,15 @@ export default function Competitivo() {
       console.error("Hubo un error al actualizar el estado del kart:", error)
     }
   }
+
+  const [mostrarFormulario, setMostrarFormulario] = useState({});
+
+  const toggleFormulario = (id_competitivo) => {
+    setMostrarFormulario((prevState) => ({
+      ...prevState,
+      [id_competitivo]: !prevState[id_competitivo],
+    }));
+  };
 
   return (
     <>
@@ -108,9 +118,11 @@ export default function Competitivo() {
               </div>
 
               <div className="botones">
-                <a href="modificar">
-                  <img src="editar.png" alt="a" width={25}></img>
-                </a>
+              <button onClick={() => toggleFormulario(item.id_competitivo)}>
+              Modificar
+            </button>{mostrarFormulario[item.id_competitivo] && (
+              <EditarClienteCompe cliente={item} />
+                )}
                 <button
                   onClick={() =>{actualizarEstadoCompetitivo(item.id_competitivo, "Inactivo");
                     liberarKart(item.id_kart, "Desocupado")
