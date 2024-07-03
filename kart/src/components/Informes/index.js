@@ -32,9 +32,30 @@ export default function Informes(){
 }
     return (
 <>
-<button onClick={generarClientesRecurrentes}>Reporte Recurrentes</button>
-<button onClick={generarClientesPorPlan}>Reporte Plan</button>
-<button onClick={generarTablaDeClasificacion}>Reporte Clasificacion</button>
+<div className='button_body_informes'>
+
+    <div className='box_informe'>
+        <div className='informes_h1'>
+        <h1>Informes SoulKarting</h1>
+        </div>
+        <div className='button_box_informes'>
+            <div className='button_box_reporte'>
+            <button className='button_reporte' onClick={generarClientesPorPlan}>Reporte Plan</button>
+            </div>
+            <div className='button_box_reporte'>
+                <button className='button_reporte' onClick={generarClientesRecurrentes}>Reporte Recurrentes</button>
+            </div>
+            <div className='button_box_reporte'>
+                <button className='button_reporte' onClick={generarTablaDeClasificacion}>Reporte Clasificacion</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+    
+</div>
+
 </>
     );
 }

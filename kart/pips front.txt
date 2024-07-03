@@ -6,3 +6,4 @@ npm install json-server
 npm install axios
 npm i prop-types
 npm i -D react-router-dom
+npm install sweetalert2

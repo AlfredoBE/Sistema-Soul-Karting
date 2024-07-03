@@ -20,24 +20,30 @@ export default function ListadoKarts() {
   
   return (
     <>
-      <h1>Estado de Karts</h1>
+    <div className="table_body">
+      <div className="table_box">
+        <h1 className="table_h1">Estado de Karts</h1>
 
-      <table>
-        <thead>
+      <table className="table_table">
+        <thead className="table_thead">
           <tr>
-            <th>Kart</th>
-            <th>Estado</th>
+            <th className="table_th">Kart</th>
+            <th className="table_th">Estado</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="table_tbody">
           {karts.map((item) => (
             <tr key={item.id_kart}>
-              <td>Kart {item.id_kart}</td>
-              <td>{item.estado_kart}</td>
+              <td className="table_td">Kart {item.id_kart}</td>
+              <td className={`table_td ${item.estado_kart === 'Ocupado' ? 'occupied' : 'unoccupied'}`}>{item.estado_kart}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
+      
+    </div>
+      
     </>
   );
 }

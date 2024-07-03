@@ -1,0 +1,53 @@
+
+
+.clasificacion_body{
+    background-color: #f0f2f5;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clasificacion_thead {
+    background-color: #00000098;
+    color: #2c8c19;
+  }
+
+.tabla-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 800px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    
+  }
+  
+  .tabla-clasificacion {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .tabla-clasificacion th,
+  .tabla-clasificacion td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #2c8c19;
+  }
+  
+  .tabla-clasificacion th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+  }
+  
+  .tabla-clasificacion tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }

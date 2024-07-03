@@ -2,6 +2,7 @@ import "./index.css";
 import React, { useState, handleSubmit, useEffect } from "react";
 import axios from "axios";
 import Clasificacion from "../TablaClasificacion";
+import Swal from "sweetalert2";
 
 export default function Formulario() {
   const idUsuario = localStorage.getItem("id_usuario");
@@ -65,9 +66,9 @@ export default function Formulario() {
 
     if (tipoCliente === "Casual") {
       if (selectedPlan === "Plan 1") {
-        setTiempoDisponible("900");
+        setTiempoDisponible("600");
       } else if (selectedPlan === "Plan 2") {
-        setTiempoDisponible("1500");
+        setTiempoDisponible("1200");
       } else if (selectedPlan === "Plan 0") {
         setTiempoDisponible("10");
       }
@@ -145,9 +146,16 @@ export default function Formulario() {
         .then((response) => {
           console.log("Formulario enviado:", response.data);
           actualizarKart(num_kart);
-          alert("Se Ingreso el cliente!");
+          Swal.fire({
+            title: '¡Se ha creado un cliente correctamente!',
+            icon: "success",
+            confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            });
           handleLimpiarClasificacion();
-          window.location.reload();
         })
         .catch((error) => {
           console.error("Hubo un error al enviar el formulario!", error);
@@ -160,8 +168,15 @@ export default function Formulario() {
         .then((response) => {
           console.log("Formulario enviado:", response.data);
           actualizarKart(num_kart);
-          alert("Se Ingreso el cliente!");
-          window.location.reload();
+          Swal.fire({
+            title: '¡Se ha creado un cliente correctamente!',
+            icon: "success",
+            confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            });
         })
         .catch((error) => {
           console.error("Hubo un error al enviar el formulario!", error);
@@ -189,123 +204,129 @@ export default function Formulario() {
   };
   return (
     <>
-      <h2>Formulario de Cliente</h2>
-      <form onSubmit={handleSubmit}>
-        <div class="form-group">
-          <label for="tipoCliente">Tipo de Cliente</label>
-          <select
-            id="tipoCliente"
-            name="tipoCliente"
-            value={tipoCliente}
-            onChange={(e) => setTipoCliente(e.target.value)}
-          >
-            <option value=""></option>
-            <option value="Casual">Casual</option>
-            <option value="Competitivo">Competitivo</option>
-          </select>
-        </div>
+      <div className="formu_body">
+        <h2 className="form_h2">Formulario de Cliente</h2>
+        <div className="form_box">
+            <form onSubmit={handleSubmit} className="form_grid">
+              <div class="formu_clientes">
+                <label className="form_label" for="tipoCliente">Tipo de Cliente</label>
+                <select
+                  id="tipoCliente"
+                  name="tipoCliente"
+                  value={tipoCliente}
+                  onChange={(e) => setTipoCliente(e.target.value)}
+                >
+                  <option value=""></option>
+                  <option value="Casual">Casual</option>
+                  <option value="Competitivo">Competitivo</option>
+                </select>
+              </div>
 
-        <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            value={nombre}
-            onChange={handleNombreChange}
-            required
-          />
-        </div>
+              <div class="formu_clientes">
+                <label className="form_label" for="nombre">Nombre</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  value={nombre}
+                  onChange={handleNombreChange}
+                  required
+                />
+              </div>
 
-        <div class="form-group">
-          <label for="apellido">Apellido</label>
-          <input
-            type="text"
-            id="apellido"
-            name="apellido"
-            value={apellido}
-            onChange={handleApellidoChange}
-            required
-          />
-        </div>
+              <div class="formu_clientes">
+                <label className="form_label" for="apellido">Apellido</label>
+                <input
+                  type="text"
+                  id="apellido"
+                  name="apellido"
+                  value={apellido}
+                  onChange={handleApellidoChange}
+                  required
+                />
+              </div>
 
-        <div class="form-group">
-          <label for="rut">RUT</label>
-          <input
-            type="number"
-            id="rut"
-            name="rut"
-            value={rut}
-            onChange={(e) => setRut(e.target.value)}
-            required
-          />
-        </div>
+              <div class="formu_clientes">
+                <label className="form_label" for="rut">RUT</label>
+                <input
+                  type="number"
+                  id="rut"
+                  name="rut"
+                  value={rut}
+                  onChange={(e) => setRut(e.target.value)}
+                  required
+                />
+              </div>
 
-        <div class="form-group">
-          <label for="plan">Plan</label>
-          <select
-            id="plan"
-            name="plan"
-            value={plan}
-            onChange={handleTipoClienteChange}
-          >
-            <option value=""></option>
-            <option value="Plan 0">Plan 0</option>
-            <option value="Plan 1">Plan 1</option>
-            <option value="Plan 2">Plan 2</option>
-          </select>
-        </div>
+              <div class="formu_clientes">
+                <label className="form_label" for="plan">Plan</label>
+                <select
+                  id="plan"
+                  name="plan"
+                  value={plan}
+                  onChange={handleTipoClienteChange}
+                >
+                  <option value=""></option>
+                  <option value="Plan 0">Plan 0</option>
+                  <option value="Plan 1">Plan 1</option>
+                  <option value="Plan 2">Plan 2</option>
+                </select>
+              </div>
 
-        <div class="form-group">
-          <label for="fecha">Fecha</label>
-          <input
-            type="date"
-            id="fecha"
-            name="fecha"
-            value={fecha}
-            onChange={(e) => setFecha(e.target.value)}
-            required
-          />
-        </div>
+              <div class="formu_clientes">
+                <label className="form_label" for="fecha">Fecha</label>
+                <input
+                  type="date"
+                  id="fecha"
+                  name="fecha"
+                  value={fecha}
+                  onChange={(e) => setFecha(e.target.value)}
+                  required
+                />
+              </div>
 
-        <div class="form-group">
-          <label for="estado">Estado</label>
-          <select
-            id="estado"
-            name="estado"
-            value={estado}
-            onChange={(e) => setEstado(e.target.value)}
-          >
-            <option value=""></option>
-            <option value="Activo">Activo</option>
-            <option value="Inactivo">Inactivo</option>
-          </select>
-        </div>
+              <div class="formu_clientes">
+                <label className="form_label" for="estado">Estado</label>
+                <select
+                  id="estado"
+                  name="estado"
+                  value={estado}
+                  onChange={(e) => setEstado(e.target.value)}
+                >
+                  <option value=""></option>
+                  <option value="Activo">Activo</option>
+                  <option value="Inactivo">Inactivo</option>
+                </select>
+              </div>
 
-        <div className="form-group">
-          <label htmlFor="kart">Kart</label>
-          <select
-            id="kart"
-            name="kart"
-            value={kart}
-            onChange={(e) => setKart(e.target.value)}
-            required
-          >
-            <option value=""></option>
-            {karts
-              .filter((k) => k.estado_kart === "Desocupado")
-              .map((kart) => (
-                <option key={kart.id_kart} value={kart.id_kart}>
-                  Kart {kart.id_kart}
-                </option>
-              ))}
-          </select>
-        </div>
+              <div className="formu_clientes">
+                <label className="form_label" htmlFor="kart">Kart</label>
+                <select
+                  id="kart"
+                  name="kart"
+                  value={kart}
+                  onChange={(e) => setKart(e.target.value)}
+                  required
+                >
+                  <option value=""></option>
+                  {karts
+                    .filter((k) => k.estado_kart === "Desocupado")
+                    .map((kart) => (
+                      <option key={kart.id_kart} value={kart.id_kart}>
+                        Kart {kart.id_kart}
+                      </option>
+                    ))}
+                </select>
+              </div>
 
-        <div class="form-group">
-          <button type="submit">Enviar</button>
+              <div class="formu_box_button">
+                <button className="formu_button" type="submit">Enviar</button>
+              </div>
+            </form>
         </div>
-      </form>
+        
+      </div>
+      
     </>
   );
 }

@@ -2,6 +2,7 @@ import "./index.css";
 import React, { useState, handleSubmit, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function Inicio_Sesion() {
   const [idUsuario, setidUsuario] = useState();
@@ -50,31 +51,52 @@ export default function Inicio_Sesion() {
         localStorage.setItem("IsAuthenticated", "true");
 
         if (rol === "Usuario") {
-          alert("Ingreso exitoso");
-          localStorage.setItem("sesionUsuario", "true");
-          localStorage.setItem("sesionAdmin", "false");
-          //Esta linea es para darle un poco de tiempo a localStorage antes de cambiar de pagina
-          //await new Promise(resolve => setTimeout(resolve, 100));
-          navegar("/usuario");
+          Swal.fire({
+            title: '¡Ingreso Exitoso!',
+            icon: "success",
+            confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  localStorage.setItem("sesionUsuario", "true");
+                  localStorage.setItem("sesionAdmin", "false");
+                  //Esta linea es para darle un poco de tiempo a localStorage antes de cambiar de pagina
+                  //await new Promise(resolve => setTimeout(resolve, 100));
+                  navegar("/usuario");
+                }
+            });
+
         } else if (rol === "Administrador") {
-          alert("Bienvenido Administrador");
-          localStorage.setItem("sesionUsuario", "false");
-          localStorage.setItem("sesionAdmin","true");
-          //await new Promise(resolve => setTimeout(resolve, 100));
-          navegar("/admin");
+          Swal.fire({
+            title: '¡Ingreso Exitoso!, Hola administrador',
+            icon: "success",
+            confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  localStorage.setItem("sesionUsuario", "false");
+                  localStorage.setItem("sesionAdmin","true");
+                  //await new Promise(resolve => setTimeout(resolve, 100));
+                  navegar("/admin");
+                }
+            });
+
         }
       } else if (usuario == null) {
-        alert("Error en Usuario o Contraseña");
+        Swal.fire({
+          title: '¡error en usuario o contraseña!',
+          icon: "error",
+          confirmButtonText: 'OK'
+          });
       }
     } catch {
       alert("Ha ocurrido un error al iniciar sesion");
     }
   };
   return (
-    <div>
-      <h2>Inicio de Sesión</h2>
+    <div className="login_body">
+      <div className="login_box">
+        <h2 className="login_h2">Inicio de Sesión</h2>
       <div className="form-group">
-        <label htmlFor="username">Nombre de Usuario</label>
+        <label className="login_label" htmlFor="username">Nombre de Usuario</label>
         <input
           type="text"
           id="username"
@@ -87,7 +109,7 @@ export default function Inicio_Sesion() {
       </div>
 
       <div className="form-group">
-        <label htmlFor="password">Contraseña</label>
+        <label className="login_label" htmlFor="password">Contraseña</label>
         <input
           type="password"
           id="password"
@@ -99,11 +121,13 @@ export default function Inicio_Sesion() {
         />
       </div>
 
-      <div className="form-group">
-        <button type="submit" onClick={handleVerificarCredenciales}>
+      <div className="form-group_button_login">
+        <button className="button_login" type="submit" onClick={handleVerificarCredenciales}>
           Iniciar Sesión
         </button>
       </div>
+      </div>
+      
     </div>
   );
   

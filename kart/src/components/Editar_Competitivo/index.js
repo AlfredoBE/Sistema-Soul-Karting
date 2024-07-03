@@ -1,6 +1,7 @@
 import "./index.css";
 import React, { useState,handleSubmit, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function EditarClienteCompe({ cliente }) {
   const [nombre, setNombre] = useState("");
@@ -55,13 +56,13 @@ export default function EditarClienteCompe({ cliente }) {
     e.preventDefault();
 
     const formData = {
-      nombre_casual: nombre,
-      apellido_casual: apellido,
-      rut_casual: parseInt(rut, 10),
-      plan_casual: plan,
+      nombre_competitivo: nombre,
+      apellido_competitivo: apellido,
+      rut_competitivo: parseInt(rut, 10),
+      plan_competitivo: plan,
       vueltasDisponibles: parseInt(vueltasDisponibles, 10),
-      fechaRegistro_casual: fecha,
-      estado_casual: estado,
+      fechaRegistro_competitivo: fecha,
+      estado_competitivo: estado,
       id_kart: parseInt(kart, 10),
     };
 
@@ -71,13 +72,39 @@ export default function EditarClienteCompe({ cliente }) {
         formData
       );
       if (response.status === 200) {
-        alert("Cliente actualizado con éxito!");
-        window.location.reload();
+        Swal.fire({
+          title: '¡Se ha actualizado el usuario correctamente!',
+          icon: "success",
+          confirmButtonText: 'OK'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.reload();
+              }
+          });
       } else {
         console.error("Error al actualizar el cliente:", response.status);
       }
     } catch (error) {
       console.error("Hubo un error al actualizar el cliente!", error);
+    }
+  };
+
+  const validarEntradaTexto = (texto) => {
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/;
+    return regex.test(texto);
+  };
+
+  const handleNombreChange = (e) => {
+    const valor = e.target.value;
+    if (validarEntradaTexto(valor)) {
+      setNombre(valor);
+    }
+  };
+
+  const handleApellidoChange = (e) => {
+    const valor = e.target.value;
+    if (validarEntradaTexto(valor)) {
+      setApellido(valor);
     }
   };
 
@@ -92,7 +119,7 @@ export default function EditarClienteCompe({ cliente }) {
             id="nombre"
             name="nombre"
             value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
+            onChange={handleNombreChange}
             required
           />
         </div>
@@ -104,7 +131,7 @@ export default function EditarClienteCompe({ cliente }) {
             id="apellido"
             name="apellido"
             value={apellido}
-            onChange={(e) => setApellido(e.target.value)}
+            onChange={handleApellidoChange}
             required
           />
         </div>

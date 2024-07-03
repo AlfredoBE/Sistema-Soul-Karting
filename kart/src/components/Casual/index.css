@@ -2,9 +2,9 @@
 
 .box{
     display: flex;
-    margin: 5px;
-    
-    
+    margin: 0;
+
+    padding-right: 15px;
     
 }
 
@@ -75,7 +75,7 @@
     align-items: center;
     height: 50px;
     width: 93%;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    
     
 }
 
@@ -91,7 +91,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 5%;
+    margin: 1%;
+    padding-bottom: 20px;
 }
 
 button{
@@ -112,12 +113,18 @@ button{
     
 
 }
+button:hover {
+    background-color: #651414;
+  }
+button:active{
+    background-color: #cb4a4a;
+}
 
 .titulo{
     display: flex;
     color: #ffffff;
     font-family: "Poppins", sans-serif;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+   
 }
 
 .botoncronometro{

@@ -5,7 +5,6 @@ import Competitivo from "../components/Competitivo";
 import ListadoKarts from "../components/ListadoKarts";
 import Formulario from "../components/Formulario";
 import Nav from "../components/Nav";
-import Clasificacion from '../components/TablaClasificacion';
 
 export default function Usuario() {
   return (
@@ -17,9 +16,6 @@ export default function Usuario() {
             </div>
             <div className="componenteusuario">
               <Competitivo />
-            </div>
-            <div>
-              <Clasificacion />
             </div>
           </div>
         </>

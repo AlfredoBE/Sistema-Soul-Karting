@@ -1,0 +1,51 @@
+.button_body_informes {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    
+  }
+  .box_informe{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #33333322;
+    border-radius: 15px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+    width: 700px;
+    height: 300px;
+  }
+
+  .button_box_informes{
+    justify-content: space-around;
+    display: flex;
+    width: 500px;
+    height: 100px;
+  }
+    .button_box_reporte{
+
+    display: flex;
+    border-radius: 5px;
+  }
+  .button_reporte {
+    background-color: #04471a86;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 200px;
+    max-height: 100px;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  .button_reporte:hover {
+    background-color: #00b34eb5;
+  }

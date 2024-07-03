@@ -6,8 +6,8 @@ body{
 .contenedorusuario{
     display: flex;
     
-    align-items: center;
-    background-color: rgba(161, 173, 145, 0.573);
+    align-items: flex-start;
+    background-color: #f0f2f5;
     
 
 }

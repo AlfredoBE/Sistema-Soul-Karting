@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Swal from "sweetalert2";
 
 const formatoTiempo = (time) => {
   let minutos = Math.floor(time / 60);
@@ -38,10 +39,13 @@ export default function Cronometro({ seconds, id}) {
   useEffect(() => {
     if (contador <= 0) {
       clearInterval(timerId.current);
-      alert('Fin de tiempo');
+      Swal.fire("¡A un usuario se le acabó el tiempo!")
+        .then(() => {
+          window.location.reload();
+      });
       setCorriendo(false);
       localStorage.removeItem(`corriendo_${id}`);
-      window.location.reload()
+      
     }
   }, [contador, id]);
 

@@ -7,7 +7,7 @@ import "./index.css";
 
 export default function Casual() {
   const [clientesCas, setClientesCas] = useState([]);
-  const [clienteSeleccionado, setClienteSeleccionado] = useState(null);
+  
   useEffect(() => {
     axios
       .get("http://127.0.0.1:8000/api/v1/clientesCas/")
@@ -88,7 +88,7 @@ export default function Casual() {
                       localStorage.getItem(`contador_${item.id_casual}`)
                     ) === 0
                       ? "#8a3636"
-                      : "#508536",
+                      : "#45a049cb",
                 }}
               >
                 <div className="t_superior">

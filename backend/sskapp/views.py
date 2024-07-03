@@ -216,7 +216,7 @@ class ClientesPDFView(APIView):
 
         # Ajustar tamaño de las etiquetas
         for text in texts + autotexts:
-            text.set_fontsize(16)
+            text.set_fontsize(15)
 
         ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 

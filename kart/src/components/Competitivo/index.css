@@ -1,9 +1,7 @@
 .box{
-
     display: flex;
-    margin: 5px;
-    
-    
+    margin: 0;
+    padding-right: 15px;
 }
 
 .tarjeta{
@@ -61,8 +59,6 @@
     align-items: center;
     justify-content: center;
     
-    
-    
 }
 
 
@@ -72,7 +68,7 @@
     align-items: center;
     height: 50px;
     width: 93%;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    
     
 }
 
@@ -110,10 +106,12 @@ button{
 
 .titulo{
     display: flex;
-    color: #ffffff;
+    color: #333333c3;
     font-family: "Poppins", sans-serif;
     margin-top: 75px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: #33333336;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 

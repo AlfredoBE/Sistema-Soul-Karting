@@ -1,5 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import axios from 'axios'; 
+import Swal from "sweetalert2";
 
 
 export default function RestarVueltas({vueltasdisponibles, id}){
@@ -32,9 +33,11 @@ export default function RestarVueltas({vueltasdisponibles, id}){
     
       useEffect(() =>{
         if(vueltas <= 0){
-          alert('Fin de vueltas');
+          Swal.fire("¡A un usuario se le acabaron las vueltas!")
+          .then(() => {
+            window.location.reload();
+          });
           localStorage.removeItem(vueltas);
-          window.location.reload();
           crearRegistroTablaClasificacion(id);
         }
       }, [vueltas, id])

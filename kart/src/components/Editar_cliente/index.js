@@ -1,6 +1,7 @@
 import "./index.css";
 import React, { useState,handleSubmit, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function EditarClienteCas({ cliente }) {
   const [nombre, setNombre] = useState("");
@@ -14,7 +15,6 @@ export default function EditarClienteCas({ cliente }) {
   const [tiempoDisponible, setTiempoDisponible] = useState("");
   
   useEffect(() => {
-    console.log("A punto de modificarlo: "+cliente);
     if (cliente) {
       setNombre(cliente.nombre_casual);
       setApellido(cliente.apellido_casual);
@@ -72,13 +72,40 @@ export default function EditarClienteCas({ cliente }) {
         formData
       );
       if (response.status === 200) {
-        alert("Cliente actualizado con éxito!");
-        window.location.reload();
+        Swal.fire({
+          title: '¡Se ha actualizado el usuario correctamente!',
+          icon: "success",
+          confirmButtonText: 'OK'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  window.location.reload();
+              }
+          });
+        
       } else {
         console.error("Error al actualizar el cliente:", response.status);
       }
     } catch (error) {
       console.error("Hubo un error al actualizar el cliente!", error);
+    }
+  };
+
+  const validarEntradaTexto = (texto) => {
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/;
+    return regex.test(texto);
+  };
+
+  const handleNombreChange = (e) => {
+    const valor = e.target.value;
+    if (validarEntradaTexto(valor)) {
+      setNombre(valor);
+    }
+  };
+
+  const handleApellidoChange = (e) => {
+    const valor = e.target.value;
+    if (validarEntradaTexto(valor)) {
+      setApellido(valor);
     }
   };
 
@@ -93,7 +120,7 @@ export default function EditarClienteCas({ cliente }) {
             id="nombre"
             name="nombre"
             value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
+            onChange={handleNombreChange}
             required
           />
         </div>
@@ -105,7 +132,7 @@ export default function EditarClienteCas({ cliente }) {
             id="apellido"
             name="apellido"
             value={apellido}
-            onChange={(e) => setApellido(e.target.value)}
+            onChange={handleApellidoChange}
             required
           />
         </div>

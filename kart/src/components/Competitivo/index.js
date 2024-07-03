@@ -81,7 +81,7 @@ export default function Competitivo() {
                   background:
                   parseInt(
                     localStorage.getItem(`vueltas_${item.id_competitivo}`)
-                  ) === 0 ? "#8a3636" : "#508536",
+                  ) === 0 ? "#8a3636" : "#45a049cb",
                 }}
               >
                 <div className="t_superior">
@@ -124,7 +124,8 @@ export default function Competitivo() {
               <EditarClienteCompe cliente={item} />
                 )}
                 <button
-                  onClick={() =>{actualizarEstadoCompetitivo(item.id_competitivo, "Inactivo");
+                  onClick={() =>{
+                    actualizarEstadoCompetitivo(item.id_competitivo, "Inactivo");
                     liberarKart(item.id_kart, "Desocupado")
                   }
                   }

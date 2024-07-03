@@ -19,9 +19,6 @@ export default function Admin() {
             <div className="componenteusuario">
               <Competitivo />
             </div>
-            <div>
-              <Clasificacion />
-            </div>
           </div>
         </>
   )};
