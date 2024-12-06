@@ -31,6 +31,7 @@ export default function EditarClienteCompe({ cliente }) {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/v1/karts/");
         setKarts(response.data);
+        console.log(kart)
       } catch (error) {
         console.error("Error al obtener los karts:", error);
       }
