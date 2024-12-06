@@ -6,14 +6,19 @@ import Swal from "sweetalert2";
 
 export default function Formulario() {
   const idUsuario = localStorage.getItem("id_usuario");
+
   const [tipoCliente, setTipoCliente] = useState("");
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [rut, setRut] = useState("");
   const [plan, setPlan] = useState("");
-  const [fecha, setFecha] = useState("");
-  const [estado, setEstado] = useState("");
+  
+
   const [kart, setKart] = useState("");
+
+  const [fechaActual, setfechaActual] = useState(new Date());
+  const [datoclienteCas, setDatoclienteCas]= useState("")
+  const [datoclienteCom, setDatoclienteCom]= useState("")
 
   const [karts, setKarts] = useState([]);
 
@@ -21,6 +26,10 @@ export default function Formulario() {
   const [vueltasDisponibles, setVueltasDisponibles] = useState("");
 
   useEffect(() => {
+    const hoy = new Date();
+    const formattedDate = hoy.toISOString().split('T')[0]; // Formatea la fecha como YYYY-MM-DD
+    setfechaActual(formattedDate);
+
     const obtenerKarts = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/v1/karts/");
@@ -30,35 +39,41 @@ export default function Formulario() {
       }
     };
 
-    obtenerKarts();
-  }, []);
+    const obtenerclientes = async () => {
+      try {
+        const responseCas = await axios.get("http://127.0.0.1:8000/api/v1/clientesCas/");
+        const responseCom = await axios.get("http://127.0.0.1:8000/api/v1/clientesComp/")
+        setDatoclienteCas(responseCas.data);
+        setDatoclienteCom(responseCom.data);
+        console.log(responseCas);
+      } catch (error) {
+        console.error("Error al obtener los karts:", error);
+      }
+    };
+    
 
-  useEffect(() => {
-    console.log({
-      vueltasDisponibles: parseInt(vueltasDisponibles, 10),
-      tipoCliente,
-      nombre,
-      apellido,
-      rut: parseInt(rut, 10),
-      plan,
-      tiempoDisponible,
-      fecha,
-      estado,
-      kart: parseInt(kart, 10),
-      idUsuario,
-    });
-  }, [
-    vueltasDisponibles,
-    tipoCliente,
-    nombre,
-    apellido,
-    rut,
-    plan,
-    tiempoDisponible,
-    fecha,
-    estado,
-    kart,
-  ]);
+    if (datoclienteCas || datoclienteCom ){
+      console.log("hola")
+      const casualEncontrado = datoclienteCas.find(cliente => cliente.rut_casual == rut);
+      const compeEncontrado = datoclienteCom.find(cliente => cliente.rut_competitivo == rut);
+      if (casualEncontrado) {
+      setNombre(casualEncontrado.nombre_casual);
+      setApellido(casualEncontrado.apellido_casual);
+      } 
+      if (compeEncontrado) {
+        setNombre(compeEncontrado.nombre_competitivo);
+        setApellido(compeEncontrado.apellido_competitivo);
+        } 
+    }
+    
+
+
+    
+    console.log(rut)
+
+    obtenerKarts();
+    obtenerclientes();
+  }, [rut]);
 
   const handleTipoClienteChange = (e) => {
     const selectedPlan = e.target.value;
@@ -120,8 +135,8 @@ export default function Formulario() {
       rut_casual: parseInt(rut, 10),
       plan_casual: plan,
       tiempo_disponible: parseInt(tiempoDisponible, 10),
-      fechaRegistro_casual: fecha,
-      estado_casual: estado,
+      fechaRegistro_casual: fechaActual,
+      estado_casual: "Activo",
       id_kart: parseInt(kart, 10),
       id_usuario: idUsuario,
     };
@@ -131,8 +146,8 @@ export default function Formulario() {
       rut_competitivo: parseInt(rut, 10),
       plan_competitivo: plan,
       vueltas_disponibles: parseInt(vueltasDisponibles, 10),
-      fechaRegistro_competitivo: fecha,
-      estado_competitivo: estado,
+      fechaRegistro_competitivo: fechaActual,
+      estado_competitivo: "Activo",
       id_usuario: idUsuario,
       id_kart: parseInt(kart, 10),
     };
@@ -202,12 +217,17 @@ export default function Formulario() {
       setApellido(valor);
     }
   };
+
+
+
+
   return (
     <>
       <div className="formu_body">
         <h2 className="form_h2">Formulario de Cliente</h2>
         <div className="form_box">
             <form onSubmit={handleSubmit} className="form_grid">
+
               <div class="formu_clientes">
                 <label className="form_label" for="tipoCliente">Tipo de Cliente</label>
                 <select
@@ -222,31 +242,7 @@ export default function Formulario() {
                 </select>
               </div>
 
-              <div class="formu_clientes">
-                <label className="form_label" for="nombre">Nombre</label>
-                <input
-                  type="text"
-                  id="nombre"
-                  name="nombre"
-                  value={nombre}
-                  onChange={handleNombreChange}
-                  required
-                />
-              </div>
-
-              <div class="formu_clientes">
-                <label className="form_label" for="apellido">Apellido</label>
-                <input
-                  type="text"
-                  id="apellido"
-                  name="apellido"
-                  value={apellido}
-                  onChange={handleApellidoChange}
-                  required
-                />
-              </div>
-
-              <div class="formu_clientes">
+              <div className="formu_clientes">
                 <label className="form_label" for="rut">RUT</label>
                 <input
                   type="number"
@@ -258,7 +254,30 @@ export default function Formulario() {
                 />
               </div>
 
-              <div class="formu_clientes">
+              <div className="formu_clientes">
+                <label className="form_label" for="nombre">Nombre</label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  value={nombre}
+                  onChange={handleNombreChange}
+                  required
+                />
+              </div>
+
+              <div className="formu_clientes">
+                <label className="form_label" for="apellido">Apellido</label>
+                <input
+                  type="text"
+                  id="apellido"
+                  name="apellido"
+                  value={apellido}
+                  onChange={handleApellidoChange}
+                  required
+                />
+              </div>
+              <div className="formu_clientes">
                 <label className="form_label" for="plan">Plan</label>
                 <select
                   id="plan"
@@ -270,32 +289,6 @@ export default function Formulario() {
                   <option value="Plan 0">Plan 0</option>
                   <option value="Plan 1">Plan 1</option>
                   <option value="Plan 2">Plan 2</option>
-                </select>
-              </div>
-
-              <div class="formu_clientes">
-                <label className="form_label" for="fecha">Fecha</label>
-                <input
-                  type="date"
-                  id="fecha"
-                  name="fecha"
-                  value={fecha}
-                  onChange={(e) => setFecha(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div class="formu_clientes">
-                <label className="form_label" for="estado">Estado</label>
-                <select
-                  id="estado"
-                  name="estado"
-                  value={estado}
-                  onChange={(e) => setEstado(e.target.value)}
-                >
-                  <option value=""></option>
-                  <option value="Activo">Activo</option>
-                  <option value="Inactivo">Inactivo</option>
                 </select>
               </div>
 
@@ -319,7 +312,7 @@ export default function Formulario() {
                 </select>
               </div>
 
-              <div class="formu_box_button">
+              <div className="formu_box_button">
                 <button className="formu_button" type="submit">Enviar</button>
               </div>
             </form>
