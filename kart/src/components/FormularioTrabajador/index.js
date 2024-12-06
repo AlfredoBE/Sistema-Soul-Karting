@@ -1,5 +1,5 @@
 import './index.css' 
-import React, { useState, handleSubmit, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from "sweetalert2";
 
@@ -45,18 +45,18 @@ export default function FormularioTrabajador(){
         <h2 className="form_h2">Formulario de Trabajador</h2>
         <div className="form_box">
             <form onSubmit={handleSubmit} className="form_grid">
-                <div class="form_clientes">
-                    <label className="form_label" for="idusuario">Rut</label>
+                <div className="form_clientes">
+                    <label className="form_label" htmlFor="idusuario">Rut</label>
                     <input type="number" id="idusuario" name="idusuario" value={idUsuario} onChange={(e) => setIdUsuario(e.target.value)} required/>
                 </div>
 
-                <div class="form_clientes">
-                    <label className="form_label" for="nombre">Nombre</label>
+                <div className="form_clientes">
+                    <label className="form_label" htmlFor="nombre">Nombre</label>
                     <input type="text" id="nombre" name="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} required/>
                 </div>
 
-                <div class="form_clientes">
-                    <label className="form_label" for="password">Password</label>
+                <div className="form_clientes">
+                    <label className="form_label" htmlFor="password">Password</label>
                     <input type="text" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                 </div>
                 <div className="form_clientes">
@@ -68,7 +68,7 @@ export default function FormularioTrabajador(){
                             </select>
                         </div>
 
-                <div class="formu_box_button">
+                <div className="formu_box_button">
                     <button className="formu_button_trabajador" type="submit">Enviar</button>
                 </div>
             </form>
