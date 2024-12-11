@@ -97,9 +97,7 @@ export default function EditarClienteCas({ cliente }) {
 
   const handleNombreChange = (e) => {
     const valor = e.target.value;
-    if (validarEntradaTexto(valor)) {
-      setNombre(valor);
-    }
+    setNombre(valor);
   };
 
   const handleApellidoChange = (e) => {

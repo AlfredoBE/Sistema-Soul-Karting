@@ -17,7 +17,10 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
+    "axios-mock-adapter": "^2.1.0",
     "babel-jest": "^29.7.0",
+    "cypress": "^13.16.1",
+    "jest": "^27.5.1",
     "react-router-dom": "^6.23.1"
   },
   "scripts": {

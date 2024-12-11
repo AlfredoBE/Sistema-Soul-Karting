@@ -75,7 +75,10 @@ export default function Casual() {
 
   return (
     <>
+    
       <h3 className="titulo">Casuales</h3>
+      
+      <div className="casuales">
       {clientesCas.map((item) => (
         <div className="box" key={item.id_casual}>
           {item.estado_casual === "Activo" && (
@@ -143,6 +146,8 @@ export default function Casual() {
           )}
         </div>
       ))}
+      </div>
+      
     </>
   );
 }

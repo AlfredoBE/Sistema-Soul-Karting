@@ -228,8 +228,8 @@ export default function Formulario() {
         <div className="form_box">
             <form onSubmit={handleSubmit} className="form_grid">
 
-              <div class="formu_clientes">
-                <label className="form_label" for="tipoCliente">Tipo de Cliente</label>
+              <div className="formu_clientes">
+                <label className="form_label" htmlFor="tipoCliente">Tipo de Cliente</label>
                 <select
                   id="tipoCliente"
                   name="tipoCliente"
@@ -243,7 +243,7 @@ export default function Formulario() {
               </div>
 
               <div className="formu_clientes">
-                <label className="form_label" for="rut">RUT</label>
+                <label className="form_label" htmlFor="rut">RUT</label>
                 <input
                   type="number"
                   id="rut"
@@ -255,7 +255,7 @@ export default function Formulario() {
               </div>
 
               <div className="formu_clientes">
-                <label className="form_label" for="nombre">Nombre</label>
+                <label className="form_label" htmlFor="nombre">Nombre</label>
                 <input
                   type="text"
                   id="nombre"
@@ -267,7 +267,7 @@ export default function Formulario() {
               </div>
 
               <div className="formu_clientes">
-                <label className="form_label" for="apellido">Apellido</label>
+                <label className="form_label" htmlFor="apellido">Apellido</label>
                 <input
                   type="text"
                   id="apellido"
@@ -278,7 +278,7 @@ export default function Formulario() {
                 />
               </div>
               <div className="formu_clientes">
-                <label className="form_label" for="plan">Plan</label>
+                <label className="form_label" htmlFor="plan">Plan</label>
                 <select
                   id="plan"
                   name="plan"
