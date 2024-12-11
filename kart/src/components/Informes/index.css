@@ -49,3 +49,35 @@
   .button_reporte:hover {
     background-color: #00b34eb5;
   }
+
+  .select_reporte {
+    -webkit-appearance: none;  /* Oculta la flecha en Webkit browsers (Chrome, Safari) */
+    -moz-appearance: none;     /* Oculta la flecha en Firefox */
+    appearance: none; 
+    background-color: #04471a00;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 20px;
+    font-size: 17px;
+    border-radius: 5px;
+    width: 200px;  /* Ajustar el tamaño al mismo que los botones */
+    height: 40px;  /* Ajustar la altura */
+    cursor: pointer;
+  }
+  
+  .select_reporte:hover {
+    background-color: #00b34e00;
+  }
+  .select_reporte option {
+    background-color: #04472986;  /* Mismo fondo que el select */
+    color: white;                 /* Mismo color de texto que el select */
+    font-size: 16px;              /* Mismo tamaño de fuente */
+    padding: 10px 20px;           /* Mismo espaciado interno */
+    height: 40px;                 /* Asegura que las opciones tengan la misma altura */
+    text-align: center;           /* Centra el texto en las opciones */
+  }
+  
