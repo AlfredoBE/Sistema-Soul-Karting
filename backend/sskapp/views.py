@@ -305,31 +305,24 @@ import pandas as pd
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from reportlab.platypus import Image 
 
-#-----------------------------from django.http import HttpResponse
-
-
-import pandas as pd
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
- 
-
-import pandas as pd
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from reportlab.platypus import Image 
-
-
-
+#-----------------------------para llamarlo http://127.0.0.1:8000/api/v1/total-clientes-recurrentes/2024
+#                                           http://127.0.0.1:8000/api/v1/total-clientes-recurrentes/2023/
 
 
 
 class TotalClientesRecurrentesPDFView(APIView):
-    def get(self, request):
+    def get(self, request, year):
         # Obtener clientes casuales y competitivos con recurrencia para la tabla
         clientes_casual = clienteCasual.objects.values('nombre_casual', 'apellido_casual', 'rut_casual').annotate(repetidos=Count('rut_casual')).order_by('-repetidos')
         clientes_competitivo = clienteCompetitivo.objects.values('nombre_competitivo', 'apellido_competitivo', 'rut_competitivo').annotate(repetidos=Count('rut_competitivo')).order_by('-repetidos')
 
+        # Filtrar clientes por año
+        clientes_casual = clientes_casual.filter(fechaRegistro_casual__year=year)
+        clientes_competitivo = clientes_competitivo.filter(fechaRegistro_competitivo__year=year)
+
         # Obtener clientes casuales y competitivos con recurrencia para el gráfico
-        clientes_casual_grafico = clienteCasual.objects.values('fechaRegistro_casual').annotate(repetidos=Count('id_casual')).order_by('fechaRegistro_casual')
-        clientes_competitivo_grafico = clienteCompetitivo.objects.values('fechaRegistro_competitivo').annotate(repetidos=Count('id_competitivo')).order_by('fechaRegistro_competitivo')
+        clientes_casual_grafico = clienteCasual.objects.values('fechaRegistro_casual').annotate(repetidos=Count('id_casual')).filter(fechaRegistro_casual__year=year).order_by('fechaRegistro_casual')
+        clientes_competitivo_grafico = clienteCompetitivo.objects.values('fechaRegistro_competitivo').annotate(repetidos=Count('id_competitivo')).filter(fechaRegistro_competitivo__year=year).order_by('fechaRegistro_competitivo')
 
         # Crear el documento PDF
         response = HttpResponse(content_type='application/pdf')
@@ -340,18 +333,30 @@ class TotalClientesRecurrentesPDFView(APIView):
 
         # Crear gráfico de barras por mes para clientes casuales y competitivos
         fig, ax = plt.subplots(figsize=(10, 6))
-        
+
         # Datos de clientes casuales por mes
         df_casual = pd.DataFrame(list(clientes_casual_grafico))
-        df_casual['fechaRegistro_casual'] = pd.to_datetime(df_casual['fechaRegistro_casual'])
-        df_casual['mes'] = df_casual['fechaRegistro_casual'].dt.strftime('%B %Y')
-        df_casual_agrupado = df_casual.groupby('mes')['repetidos'].sum()
+        print(df_casual.columns)  # Verificar las columnas del DataFrame
+
+        if 'fechaRegistro_casual' in df_casual.columns:
+            df_casual['fechaRegistro_casual'] = pd.to_datetime(df_casual['fechaRegistro_casual'])
+            df_casual['mes'] = df_casual['fechaRegistro_casual'].dt.strftime('%B %Y')
+            df_casual_agrupado = df_casual.groupby('mes')['repetidos'].sum()
+        else:
+            print("El campo 'fechaRegistro_casual' no está presente en los datos de clientes casuales.")
+            df_casual_agrupado = pd.Series()  # Si el campo no está, crea una serie vacía.
 
         # Datos de clientes competitivos por mes
         df_competitivo = pd.DataFrame(list(clientes_competitivo_grafico))
-        df_competitivo['fechaRegistro_competitivo'] = pd.to_datetime(df_competitivo['fechaRegistro_competitivo'])
-        df_competitivo['mes'] = df_competitivo['fechaRegistro_competitivo'].dt.strftime('%B %Y')
-        df_competitivo_agrupado = df_competitivo.groupby('mes')['repetidos'].sum()
+        print(df_competitivo.columns)  # Verificar las columnas del DataFrame
+
+        if 'fechaRegistro_competitivo' in df_competitivo.columns:
+            df_competitivo['fechaRegistro_competitivo'] = pd.to_datetime(df_competitivo['fechaRegistro_competitivo'])
+            df_competitivo['mes'] = df_competitivo['fechaRegistro_competitivo'].dt.strftime('%B %Y')
+            df_competitivo_agrupado = df_competitivo.groupby('mes')['repetidos'].sum()
+        else:
+            print("El campo 'fechaRegistro_competitivo' no está presente en los datos de clientes competitivos.")
+            df_competitivo_agrupado = pd.Series()  # Si el campo no está, crea una serie vacía.
 
         # Unir datos de clientes casuales y competitivos por mes
         df_unido = pd.DataFrame({
@@ -372,7 +377,7 @@ class TotalClientesRecurrentesPDFView(APIView):
 
         # Formatear etiquetas del eje x para mostrar solo el mes y el año
         ax.set_xticklabels(df_unido.index.strftime('%B %Y'))
-        
+
         plt.xticks(rotation=45, ha='right')
         plt.tight_layout()
 

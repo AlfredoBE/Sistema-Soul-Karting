@@ -15,8 +15,7 @@ urlpatterns=[
     path('', include(router.urls)),
     path('tabla-clasificacion-pdf/', TablaClasificacionPDFView.as_view(), name='tabla-clasificacion-pdf'),
     path('clientes-pdf/', ClientesPDFView.as_view(), name='clientes_pdf'),
-    path('total-clientes-recurrentes/', TotalClientesRecurrentesPDFView.as_view(), name='total-clientes-recurrentes'),
-
+    path('total-clientes-recurrentes/<int:year>/', TotalClientesRecurrentesPDFView.as_view(), name='total_clientes_recurrentes_por_ano'),
 ]
 
 '''  urlpatterns=[
