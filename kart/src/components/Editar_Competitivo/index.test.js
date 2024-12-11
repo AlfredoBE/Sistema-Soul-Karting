@@ -12,6 +12,7 @@ describe('EditarClienteCompe', () => {
 
   beforeEach(() => {
     jest.clearAllMocks(); // Limpiar los mocks antes de cada test
+    jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   test('Debe renderizar el formulario correctamente', () => {
@@ -120,4 +121,5 @@ describe('EditarClienteCompe', () => {
     // Limpiar el spy
     consoleErrorSpy.mockRestore();
   });
+
 });

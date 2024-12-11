@@ -15,6 +15,7 @@ describe('FormularioTrabajador', () => {
 
   beforeEach(() => {
     jest.clearAllMocks(); // Limpiar los mocks antes de cada test
+    jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   test('Debe renderizar el formulario correctamente', () => {
@@ -74,5 +75,6 @@ describe('FormularioTrabajador', () => {
     // Verificar que la función de error haya sido llamada
     await waitFor(() => expect(axios.post).toHaveBeenCalledTimes(1));
   });
+
 
 });
